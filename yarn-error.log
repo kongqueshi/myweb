@@ -1,0 +1,73 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add v1.21.1
+
+PATH: 
+  /Users/jiumian/.just-installs/bin:/Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/bin:/usr/local/apache-maven-3.6.3/bin:/Users/jiumian/bin:/usr/local/bin:/usr/local/apache-maven-3.6.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Applications/MySQLWorkbench.app/Contents/MacOS:/Applications/MySQLWorkbench.app/Contents/MacOS:/Users/jiumian/projects/flutter/bin
+
+Yarn version: 
+  1.22.15
+
+Node version: 
+  14.15.5
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.npm.taobao.org/v1.21.1: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66140:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140885:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141857:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141779:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (internal/streams/readable.js:1327:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+
+npm manifest: 
+  {
+    "private": true,
+    "scripts": {
+      "start": "umi dev",
+      "build": "umi build",
+      "postinstall": "umi generate tmp",
+      "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+      "test": "umi-test",
+      "test:coverage": "umi-test --coverage"
+    },
+    "gitHooks": {
+      "pre-commit": "lint-staged"
+    },
+    "lint-staged": {
+      "*.{js,jsx,less,md,json}": [
+        "prettier --write"
+      ],
+      "*.ts?(x)": [
+        "prettier --parser=typescript --write"
+      ]
+    },
+    "dependencies": {
+      "@ant-design/pro-layout": "^6.5.0",
+      "react": "17.x",
+      "react-dom": "17.x",
+      "umi": "^3.5.20"
+    },
+    "devDependencies": {
+      "@types/react": "^17.0.0",
+      "@types/react-dom": "^17.0.0",
+      "@umijs/preset-react": "1.x",
+      "@umijs/test": "^3.5.20",
+      "lint-staged": "^10.0.7",
+      "prettier": "^2.2.0",
+      "typescript": "^4.1.2",
+      "yorkie": "^2.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
