@@ -12,13 +12,11 @@ const ImageBrowse = () => {
 
   useEffect(() => {
     listAllImages();
+    nextImage();
   }, []);
 
   useEffect(() => {
-    timer && clearTimeout(timer);
-    timer = setTimeout(() => {
-      nextImage();
-    }, 1000);
+    nextImageWithDelay();
   }, [currentImage]);
 
   const listAllImages = () => {
@@ -27,13 +25,32 @@ const ImageBrowse = () => {
     });
   }
 
+  const nextImageWithDelay = () => {
+    timer && clearTimeout(timer);
+    timer = setTimeout(() => {
+      nextImage();
+    }, 1000)
+  }
+
   const nextImage = () => {
+    let isIndexChanged = false;
+
     if (images.length > 0) {
-      index += 1;
-      if (index >= images.length) {
-        index = 0;
+      let newIndex = index + 1;
+      if (newIndex >= images.length) {
+        newIndex = 0;
       }
+
+      if (newIndex != index) {
+        isIndexChanged = true;
+        index = newIndex;
+      }
+    }
+
+    if (isIndexChanged) {
       setCurrentImage(HOST + "/file/" + images[index]);
+    } else {
+      nextImageWithDelay();
     }
   }
 
