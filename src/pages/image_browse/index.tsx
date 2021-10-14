@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { request } from 'umi';
 import ImageView from './components/image_view';
 
-const HOST = '';
+const HOST = 'http://115.199.102.124:8111';
 let index = -1;
 
 const ImageBrowse = () => {
@@ -21,10 +21,8 @@ const ImageBrowse = () => {
   }, []);
 
   const listAllImages = () => {
-    request('/files', {}).then(({ success, data }: { success: boolean, data: string[] }) => {
-      if (success) {
-        setImages(data);
-      }
+    request(HOST + '/files', {}).then((data) => {
+      setImages(data);
     });
   }
 
@@ -34,12 +32,12 @@ const ImageBrowse = () => {
       if (index >= images.length) {
         index = 0;
       }
-
+      console.log(images[index])
       setCurrentImage(HOST + "/file/" + images[index]);
     }
   }
 
-  return (<ImageView src="https://tse1-mm.cn.bing.net/th?id=OIP-C.0jcDIcBuAuCytqPdmBrRgQHaEo&w=200&h=139&c=8&rs=1&qlt=90&o=6&dpr=1.25&pid=3.1&rm=2" />);
+  return (<ImageView src={currentImage} />);
 }
 
 export default ImageBrowse;
