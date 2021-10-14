@@ -8,10 +8,9 @@ let index = -1;
 const ImageBrowse = () => {
   const [images, setImages] = useState<string[]>([]);
   const [currentImage, setCurrentImage] = useState<string>("");
-
-  const timer = setInterval(() => {
+  const [timer] = useState(setInterval(() => {
     nextImage();
-  }, 1000);
+  }, 1000));
 
   useEffect(() => {
     listAllImages();
@@ -32,12 +31,11 @@ const ImageBrowse = () => {
       if (index >= images.length) {
         index = 0;
       }
-      console.log(images[index])
       setCurrentImage(HOST + "/file/" + images[index]);
     }
   }
 
-  return (<ImageView src={currentImage} />);
+  return (<ImageView src={currentImage} onClick={nextImage} />);
 }
 
 export default ImageBrowse;
