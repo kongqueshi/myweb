@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { request } from 'umi';
+import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons'
+import FloatingBar from '../components/floating_bar';
 import ImageView from './components/image_view';
+import styles from './index.less';
 
 const HOST = 'http://115.199.102.124:8111';
 let index = -1;
 let timer: NodeJS.Timeout | undefined;
+let timeGap = 1000;
 
 const ImageBrowse = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -12,8 +16,11 @@ const ImageBrowse = () => {
 
   useEffect(() => {
     listAllImages();
-    nextImage();
   }, []);
+
+  useEffect(() => {
+    nextImage();
+  }, [images]);
 
   useEffect(() => {
     nextImageWithDelay();
@@ -29,7 +36,7 @@ const ImageBrowse = () => {
     timer && clearTimeout(timer);
     timer = setTimeout(() => {
       nextImage();
-    }, 1000)
+    }, timeGap)
   }
 
   const nextImage = () => {
@@ -54,7 +61,29 @@ const ImageBrowse = () => {
     }
   }
 
-  return (<ImageView src={currentImage} onClick={nextImage} />);
+  const addTimeGap = () => {
+    timeGap += 500;
+  }
+
+  const minusTimeGap = () => {
+    timeGap -= 500;
+    if (timeGap < 500) {
+      timeGap = 500;
+    }
+
+    nextImageWithDelay();
+  }
+
+  return (
+    <div className={styles.imageBrowse}>
+      <FloatingBar
+        actions={[
+          <PlusCircleOutlined onClick={addTimeGap} />,
+          <MinusCircleOutlined onClick={minusTimeGap} />
+        ]}
+      />
+      <ImageView src={currentImage} onClick={nextImage} />
+    </div>);
 }
 
 export default ImageBrowse;

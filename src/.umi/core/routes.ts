@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from 'react';
-import { ApplyPluginsType } from '/Users/jiumian/projects/myweb/node_modules/umi/node_modules/@umijs/runtime';
+import { ApplyPluginsType } from '/Users/jiumian/projects/myweb1/node_modules/umi/node_modules/@umijs/runtime';
 import * as umiExports from './umiExports';
 import { plugin } from './plugin';
 
@@ -9,11 +9,6 @@ export function getRoutes() {
   {
     "path": "/image_browse",
     "component": require('@/pages/image_browse').default,
-    "exact": true
-  },
-  {
-    "path": "/",
-    "component": require('@/pages/index').default,
     "exact": true
   }
 ];
