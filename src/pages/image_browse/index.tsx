@@ -4,20 +4,22 @@ import ImageView from './components/image_view';
 
 const HOST = 'http://115.199.102.124:8111';
 let index = -1;
+let timer: NodeJS.Timeout | undefined;
 
 const ImageBrowse = () => {
   const [images, setImages] = useState<string[]>([]);
   const [currentImage, setCurrentImage] = useState<string>("");
-  const [timer] = useState(setInterval(() => {
-    nextImage();
-  }, 1000));
 
   useEffect(() => {
     listAllImages();
-    return () => {
-      clearInterval(timer);
-    }
   }, []);
+
+  useEffect(() => {
+    timer && clearTimeout(timer);
+    timer = setTimeout(() => {
+      nextImage();
+    }, 1000);
+  }, [currentImage]);
 
   const listAllImages = () => {
     request(HOST + '/files', {}).then((data) => {
