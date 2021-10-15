@@ -40,6 +40,7 @@ const ImageBrowse = () => {
   }
 
   const nextImage = () => {
+    console.log("next")
     let isIndexChanged = false;
 
     if (images.length > 0) {
@@ -82,7 +83,8 @@ const ImageBrowse = () => {
           <MinusCircleOutlined onClick={minusTimeGap} />
         ]}
       />
-      <ImageView src={currentImage} onClick={nextImage} />
+      {/* <ImageView src={currentImage} onClick={nextImage} /> */}
+      <ImageView src={"http://git.cn-hangzhou.oss-cdn.aliyun-inc.com/uploads/f2e-just/just/850b09e6c457af27e5a00d01aec87018/image.png#alt=image"} onClick={nextImage} />
     </div>);
 }
 
