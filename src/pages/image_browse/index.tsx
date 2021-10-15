@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { request } from 'umi';
-import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons'
-import FloatingBar from '../components/floating_bar';
-import ImageView from './components/image_view';
-import styles from './index.less';
+import React, { useState, useEffect } from "react";
+import { request } from "umi";
+import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import FloatingBar from "../components/floating_bar";
+import ImageView from "./components/image_view";
+import styles from "./index.less";
 
-const HOST = 'http://115.199.102.124:8111';
+const HOST = "http://115.199.102.124:8111";
 let index = -1;
 let timer: NodeJS.Timeout | undefined;
 let timeGap = 1000;
+
+const rootRef = React.createRef();
 
 const ImageBrowse = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -27,20 +29,19 @@ const ImageBrowse = () => {
   }, [currentImage]);
 
   const listAllImages = () => {
-    request(HOST + '/files', {}).then((data) => {
+    request(HOST + "/files", {}).then((data) => {
       setImages(data);
     });
-  }
+  };
 
   const nextImageWithDelay = () => {
     timer && clearTimeout(timer);
     timer = setTimeout(() => {
       nextImage();
-    }, timeGap)
-  }
+    }, timeGap);
+  };
 
   const nextImage = () => {
-    console.log("next")
     let isIndexChanged = false;
 
     if (images.length > 0) {
@@ -60,11 +61,12 @@ const ImageBrowse = () => {
     } else {
       nextImageWithDelay();
     }
-  }
+  };
 
   const addTimeGap = () => {
+    console.log("add");
     timeGap += 500;
-  }
+  };
 
   const minusTimeGap = () => {
     timeGap -= 500;
@@ -73,19 +75,24 @@ const ImageBrowse = () => {
     }
 
     nextImageWithDelay();
-  }
+  };
 
   return (
-    <div className={styles.imageBrowse}>
+    <div
+      ref={rootRef}
+      onClick={() => rootRef.current.requestFullscreen()}
+      className={styles.imageBrowse}
+    >
       <FloatingBar
         actions={[
           <PlusCircleOutlined onClick={addTimeGap} />,
-          <MinusCircleOutlined onClick={minusTimeGap} />
+          <MinusCircleOutlined onClick={minusTimeGap} />,
         ]}
       />
-      {/* <ImageView src={currentImage} onClick={nextImage} /> */}
-      <ImageView src={"http://git.cn-hangzhou.oss-cdn.aliyun-inc.com/uploads/f2e-just/just/850b09e6c457af27e5a00d01aec87018/image.png#alt=image"} onClick={nextImage} />
-    </div>);
-}
+      <ImageView src={currentImage} onClick={nextImage} />
+      {/* <ImageView src={"http://git.cn-hangzhou.oss-cdn.aliyun-inc.com/uploads/f2e-just/just/850b09e6c457af27e5a00d01aec87018/image.png#alt=image"} onClick={nextImage} /> */}
+    </div>
+  );
+};
 
 export default ImageBrowse;
