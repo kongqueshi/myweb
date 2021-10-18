@@ -5,7 +5,7 @@ import FloatingBar from "../components/floating_bar";
 import ImageView from "./components/image_view";
 import styles from "./index.less";
 
-const HOST = "http://115.199.102.124:8111";
+const HOST = "http://115.199.102.130:8111";
 let index = -1;
 let timer: NodeJS.Timeout | undefined;
 let timeGap = 1000;
