@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { request } from "umi";
-import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
-import FloatingBar from "../components/floating_bar";
-import ImageView from "./components/image_view";
+import ReactPlayer from "react-player";
 import styles from "./index.less";
 
 const HOST = "http://115.199.102.130:8111";
@@ -14,23 +12,41 @@ const rootRef = React.createRef();
 
 const VideoBrowse = () => {
   const [videos, setVideos] = useState<string[]>([]);
-  const [currentImage, setCurrentImage] = useState<string>("");
+  const [currentVideo, setCurrentVidoe] = useState<string>("");
 
   useEffect(() => {
     listAllVideos();
   }, []);
 
+  useEffect(() => {
+    next();
+  }, [videos]);
+
   const listAllVideos = () => {
     request(HOST + "/videos", {}).then((data) => {
-      setVideos(data);
+      setVideos(data.map((video: any) => `${HOST}/video?filename=${video}`));
     });
+  };
+
+  const next = () => {
+    console.log("fsfsd");
+    index += 1;
+    if (index >= videos.length) {
+      index = 0;
+    }
+    setCurrentVidoe(videos[index]);
   };
 
   return (
     <div>
-      {videos.map((video) => (
-        <a href={`${HOST}/video?filename=${video}`}>{video}</a>
-      ))}
+      {videos.length && (
+        <ReactPlayer
+          playing
+          controls
+          url={currentVideo}
+          onEnded={() => next()}
+        />
+      )}
     </div>
   );
 };
